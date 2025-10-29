@@ -15,6 +15,7 @@ const createTrip = async (req, res) => {
 };
 
 const getTrips = async (req, res) => {
+  console.log("hji")
   try {
     const results = await pool.query('SELECT * FROM trips ORDER BY id ASC')
     res.status(200).json(results.rows)
