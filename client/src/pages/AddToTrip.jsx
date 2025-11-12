@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import AddTripOptionCard from '../components/AddTripOptionCard';
+import { useApi } from '../apiContext';
 
 
 const AddToTrip = (props) => {
+    const API_URL = useApi();
 
     const [trips, setTrips] = useState([]);
     

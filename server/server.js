@@ -5,8 +5,9 @@ import passport from 'passport';
 import session from 'express-session';
 import { GitHub } from './config/auth.js'
 
-import {router as authRoutes}  from './routes/auth.js'
+import authRoutes from './routes/auth.js'
 import tripRoutes from './routes/trips.js';
+import userTripRoutes from './routes/users-trips.js'
 import destinationRoutes from './routes/destinations.js';
 import activityRoutes from './routes/activities.js';
 import tripDestinationRoutes from './routes/tripDestinations.js'
@@ -47,6 +48,8 @@ app.use('/api/trips-destinations', tripDestinationRoutes)
 app.use('/api/trips/', tripRoutes);
 app.use('/api/activities/', activityRoutes);
 app.use('/api/destinations/', destinationRoutes);
+
+app.use('/users-trips', userTripRoutes)
 
 const PORT = process.env.PORT || 3001
 

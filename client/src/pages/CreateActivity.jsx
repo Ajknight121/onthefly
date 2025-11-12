@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { useParams } from 'react-router';
 import './CreateActivity.css'
+import { useApi } from '../apiContext';
 
 const CreateActivity = () => {
+    const API_URL = useApi();
 
     const [activity, setActivity] = useState({activity: "" })
     const {trip_id} = useParams();

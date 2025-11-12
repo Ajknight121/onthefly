@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { useParams } from 'react-router';
 import './CreateDestination.css'
+import { useApi } from '../apiContext';
 
 const CreateDestination = () => {
+    const API_URL = useApi();
 
     const [destination, setDestination] = useState({destination: "", description: "", city: "", country: "", img_url: "", flag_img_url: "" })
     const {trip_id} = useParams();
@@ -27,7 +29,7 @@ const CreateDestination = () => {
             body: JSON.stringify(destination)
             }
 
-            const response = await fetch('/api/destination/create', options)
+            const response = await fetch(`${API_URL}`+'/api/destination/create', options)
             const data = await response.json()
             setDestination(data)
             return data.id
@@ -42,7 +44,7 @@ const CreateDestination = () => {
             body: JSON.stringify({trip_id: trip_id, destination_id: destination_id})
             }
 
-            const response = await fetch('/api/trips-destinations/create', options)
+            const response = await fetch(`${API_URL}`+'/api/trips-destinations/create', options)
             const data = await response.json()
             return data
         }

@@ -9,25 +9,43 @@ import ReadDestinations from './pages/ReadDestinations'
 import TripDetails from './pages/TripDetails'
 import CreateActivity from './pages/CreateActivity';
 import AddToTrip from './pages/AddToTrip';
+import Login from './pages/Login';
+import { useApi } from './apiContext';
+
+
+
 
 const App = () => {
   const [trips, setTrips] = useState([]);
   const [destinations, setDestinations] = useState([]);
+  const [user, setUser] = useState(null);
+
+  
+
+  const API_URL = useApi();
+  console.log(API_URL)
   
   useEffect(() => {
+    const getUser = async () => {
+      const response = await fetch(`${API_URL}/auth/login/success`, { credentials: "include" });
+      const json = await response.json();
+      setUser(json.user);
+    };
+
     const fetchTrips = async () => {
-      const response = await fetch('/api/trips')
+      const response = await fetch(`${API_URL}/api/trips`)
       console.log(response)
       const data = await response.json()
       setTrips(data)
     }
 
     const fetchDestinations = async () => {
-      const response = await fetch('/api/destinations')
+      const response = await fetch(`${API_URL}/api/destinations`)
       const data = await response.json()
       setDestinations(data)
     }
 
+    getUser()
     fetchTrips()
     fetchDestinations()
   }, [])
@@ -35,53 +53,68 @@ const App = () => {
   // Sets up routes
   let element = useRoutes([
     {
-      path: "/",
-      element:<ReadTrips data={trips}/>
+    path: '/',
+    element: user && user.id ?
+        <ReadTrips user={user} data={trips} /> : <Login  />
     },
     {
-      path:"/trip/new",
-      element: <CreateTrip />
+    path: '/trip/new',
+    element: user && user.id ?
+        <CreateTrip user={user}  /> : <Login  />
     },
     {
-      path:"/edit/:id",
-      element: <EditTrip data={trips} />
+    path: '/edit/:id',
+    element: user && user.id ?
+        <EditTrip user={user} data={trips}  /> : <Login  />
     },
     {
-      path:"/destinations",
-      element: <ReadDestinations data={destinations} />
+    path: '/destinations',
+    element: user && user.id ?
+        <ReadDestinations user={user} data={destinations} /> : <Login  />
     },
     {
-      path:"/trip/get/:id",
-      element: <TripDetails data={trips} />
+    path: '/trip/get/:id',
+    element: user && user.id ?
+        <TripDetails user={user} data={trips}  /> : <Login  />
     },
     {
-      path:"/destination/new/:trip_id",
-      element: <CreateDestination />
+    path: '/destination/new/:trip_id',
+    element: user && user.id ?
+        <CreateDestination user={user}  /> : <Login  />
     },
     {
-      path:"/activity/create/:trip_id",
-      element: <CreateActivity />
+    path: '/activity/create/:trip_id',
+    element: user && user.id ?
+        <CreateActivity user={user}  /> : <Login  />
     },
     {
-      path:"/destinations/add/:destination_id",
-      element: <AddToTrip data={trips}/>
-    }
-  ]);
+    path: '/destinations/add/:destination_id',
+    element: user && user.id ?
+        <AddToTrip user={user} data={trips}  /> : <Login  />
+    },
+    {
+    path: '/users/add/:trip_id',
+    element: user && user.id ?
+        <AddUserToTrip user={user}/> : <Login  />
+    },
+])
 
   
   return ( 
 
-    <div className="App">
-
-      <div className="header">
-
-        <h1>On The Fly ✈️</h1>
-        <Link to="/"><button className="headerBtn">Explore Trips</button></Link>
-        <Link to="/destinations"><button className="headerBtn">Explore Destinations</button></Link>
-        <Link to="/trip/new"><button className="headerBtn"> + Add Trip </button></Link>
-      </div>
-        {element}
-    </div>
+    <div className='App'>
+    {
+        user && user.id ?
+            <div className='header'>
+                <h1>On The Fly ✈️</h1>
+                <Link to='/'><button className='headerBtn'>Explore Trips</button></Link>
+                <Link to='/destinations'><button className='headerBtn'>Explore Destinations</button></Link>
+                <Link to='/trip/new'><button className='headerBtn'> + Add Trip </button></Link>
+            </div>
+        : <></>
+    }
+    {element}
+</div>
 
   );
 }

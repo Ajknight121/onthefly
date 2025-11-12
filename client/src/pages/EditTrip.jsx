@@ -1,8 +1,10 @@
 import {useState, useEffect} from 'react';
 import { useParams } from 'react-router';
 import './EditTrip.css'
+import { useApi } from '../apiContext';
 
 const EditTrip = ({data}) => {
+    const API_URL = useApi();
 
     const {id} = useParams();
     const [trip, setTrip] = useState({id: 0, title: "", description: "", img_url: "", num_days: 0, start_date: "", end_date: "", total_cost: 0.0 })
@@ -35,7 +37,7 @@ const EditTrip = ({data}) => {
             body: JSON.stringify(trip)
         }
 
-        fetch('/api/trips/' + id, options)
+        fetch(`${API_URL}`+'/api/trips/' + id, options)
         window.location.href = '/'
     }
 
@@ -46,7 +48,7 @@ const EditTrip = ({data}) => {
             method: 'DELETE'
         }
 
-        fetch('/api/trips/' + id, options)
+        fetch(`${API_URL}`+'/api/trips/' + id, options)
         window.location.href = '/'
     }
 
