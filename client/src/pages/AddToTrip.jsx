@@ -4,7 +4,7 @@ import { useApi } from '../apiContext';
 
 
 const AddToTrip = (props) => {
-    const API_URL = useApi();
+    const {API_URL} = useApi();
 
     const [trips, setTrips] = useState([]);
     

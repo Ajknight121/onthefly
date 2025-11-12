@@ -4,7 +4,7 @@ import './CreateActivity.css'
 import { useApi } from '../apiContext';
 
 const CreateActivity = () => {
-    const API_URL = useApi();
+    const {API_URL} = useApi();
 
     const [activity, setActivity] = useState({activity: "" })
     const {trip_id} = useParams();

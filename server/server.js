@@ -38,7 +38,6 @@ passport.deserializeUser((user, done) => {
   done(null, user)
 })
 
-app.use("/auth", authRoutes);
 
 app.get("/", (req,res) => {
   res.status(200).send('<h1 style="text-align: center; margin-top: 50px;">✈️ On the Fly API</h1>')
@@ -48,8 +47,9 @@ app.use('/api/trips-destinations', tripDestinationRoutes)
 app.use('/api/trips/', tripRoutes);
 app.use('/api/activities/', activityRoutes);
 app.use('/api/destinations/', destinationRoutes);
-
 app.use('/users-trips', userTripRoutes)
+app.use("/auth", authRoutes);
+
 
 const PORT = process.env.PORT || 3001
 

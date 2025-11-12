@@ -4,7 +4,7 @@ import './EditTrip.css'
 import { useApi } from '../apiContext';
 
 const EditTrip = ({data}) => {
-    const API_URL = useApi();
+    const {API_URL} = useApi();
 
     const {id} = useParams();
     const [trip, setTrip] = useState({id: 0, title: "", description: "", img_url: "", num_days: 0, start_date: "", end_date: "", total_cost: 0.0 })

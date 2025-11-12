@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import { useApi } from '../apiContext';
 
 const Login = (props) => {
-  const API_URL = useApi();
+  const {API_URL} = useApi();
   const AUTH_URL = `${API_URL}/auth/github`;
 
   return (

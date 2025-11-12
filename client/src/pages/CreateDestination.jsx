@@ -4,7 +4,7 @@ import './CreateDestination.css'
 import { useApi } from '../apiContext';
 
 const CreateDestination = () => {
-    const API_URL = useApi();
+    const {API_URL} = useApi();
 
     const [destination, setDestination] = useState({destination: "", description: "", city: "", country: "", img_url: "", flag_img_url: "" })
     const {trip_id} = useParams();

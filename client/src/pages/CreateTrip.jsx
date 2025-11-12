@@ -3,7 +3,7 @@ import './CreateTrip.css'
 import { useApi } from '../apiContext';
 
 const CreateTrip = () => {
-    const API_URL = useApi();
+    const {API_URL} = useApi();
 
     const [trip, setTrip] = useState({id: 0, title: "", description: "", img_url: "", num_days: 0, start_date: "", end_date: "", total_cost: 0.0 })
     
